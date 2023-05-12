@@ -14,7 +14,7 @@ A magical Streamlit app that provides insights into your past, present, and futu
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/mystical-tarot-card-reading.git
+git clone https://github.com/rbuttery/tarot_card_bot.git
 ```
 
 2. Install the required packages:
