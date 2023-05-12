@@ -2,6 +2,8 @@
 
 A magical Streamlit app that provides insights into your past, present, and future using Tarot cards. Get ready to explore the mystical world of Tarot readings and uncover the answers to your questions! 🌟
 
+## **Click Here to use the App! [https://tarotai.streamlit.app/](https://tarotai.streamlit.app/)**
+
 ## Features 🌈
 
 - Beautifully designed Tarot Card Reading app 💖
