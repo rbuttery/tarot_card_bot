@@ -13,7 +13,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data()
 def get_cards():
     # Read the cards from the json file
     with open('./tarot_card_deck.json', 'r') as f:
@@ -77,7 +77,7 @@ def get_card_image(card, scaling_factor=1, reversed=False):
     return img_bytes.getvalue()
 
 
-def stream_typing(text, typing_speed=0.1):
+def stream_typing(text, typing_speed=0.001):
     container = st.empty()
     displayed_text = ""
     for char in text:
@@ -89,26 +89,54 @@ st.set_page_config(layout="centered")
 
 tarot_deck = get_cards()
 
-st.markdown(
-    f"# {to_color('**Welcome to your mystical Tarot Card Reading!**', 'pink')}", unsafe_allow_html=True)
 
-st.markdown(f"### {to_color('**Instructions:**','pink')}",
-            unsafe_allow_html=True)
-st.markdown(f"{to_color('*In this reading, a 3-card spread will be used to provide insights into your past, present, and future. Each cards meaning will be tailored to the topic or question you provide.*', 'pink')}", unsafe_allow_html=True)
-st.markdown(f"{to_color('Cards drawn in', 'pink')} {to_color('**reversed**','red')} {to_color('position represents blocked or repressed energies, while','pink')} {to_color('**upright**','green')}{to_color(': represents clear and direct energies.','pink')}", unsafe_allow_html=True)
 
 st.markdown(
-    f"### {to_color('**Tarot Card Meanings:**','pink')}", unsafe_allow_html=True)
+    """
+    <div style='background-color: #FFC0CB; padding: 1rem; border-radius: 0.5rem;'>
+        <h1 style='color: white; font-size: 3rem; text-align: center;'>
+            Welcome to your mystical Tarot Card Reading!
+        </h1>
+        <h3 style='color: white; font-size: 2rem; text-align: center; margin-top: 1rem;'>
+            Instructions:
+        </h3>
+        <p style='color: white; font-size: 1.5rem; text-align: center; margin-top: 1rem;'>
+            In this reading, a 3-card spread will be used to provide insights into your past, present, and future. 
+            Each card's meaning will be tailored to the topic or question you provide.
+        </p>
+        <p style='color: white; font-size: 1.5rem; text-align: center; margin-top: 1rem;'>
+            Cards drawn in <span style='color: #FF6347;'>reversed</span> position represents blocked or repressed energies, 
+            while <span style='color: #32CD32;'>upright</span> position represents clear and direct energies.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
 question_topic = st.text_input(
-    "What mystical inquiry or area of curiosity shall we delve into for your Tarot Card Reading?")
+    "What mystical inquiry or area of curiosity shall we delve into for your Tarot Card Reading?",
+    key="question_topic",
+)
+
+
+
+# st.markdown(
+#     f"# {to_color('**Welcome to your mystical Tarot Card Reading!**', 'pink')}", unsafe_allow_html=True)
+
+# st.markdown(f"### {to_color('**Instructions:**','pink')}",
+#             unsafe_allow_html=True)
+# st.markdown(f"{to_color('*In this reading, a 3-card spread will be used to provide insights into your past, present, and future. Each cards meaning will be tailored to the topic or question you provide.*', 'pink')}", unsafe_allow_html=True)
+# st.markdown(f"{to_color('Cards drawn in', 'pink')} {to_color('**reversed**','red')} {to_color('position represents blocked or repressed energies, while','pink')} {to_color('**upright**','green')}{to_color(': represents clear and direct energies.','pink')}", unsafe_allow_html=True)
+
+# question_topic = st.text_input(
+#     "What mystical inquiry or area of curiosity shall we delve into for your Tarot Card Reading?")
 
 if st.button("Reveal Cards"):
     reader_intro = get_tarot_reading(
         f"The user has asked about \"{question_topic}\". Say something ominous to begin the reading, but do not expext an answer as the next message will be the terot reading results.")
     st.markdown(f"### {to_color('**Reading:**','orange')}",
                 unsafe_allow_html=True)
-    st.markdown(to_color(f'{reader_intro}',
-                color='orange'), unsafe_allow_html=True)
+    stream_typing(f'{reader_intro}')
 
     (past_card, tarot_deck[past_card], past_ori), (present_card, tarot_deck[present_card], present_ori), (
         future_card, tarot_deck[future_card], future_ori) = draw_three_card_spread(tarot_deck)
