@@ -94,7 +94,7 @@ tarot_deck = get_cards()
 
 st.markdown(
     """
-    <div style='background: linear-gradient(135deg, #150133 0%, #006d77 44%, #83c5be 100%); padding: 2rem; border-radius: 1rem; box-shadow: 0.75rem 0.75rem 3rem rgba(0,0,0,0.2);'>
+    <div style='background: linear-gradient(135deg, #1D0133 0%, #2E0077 44%, #8CD7CF 100%); padding: 2rem; border-radius: 1rem; box-shadow: 0.75rem 0.75rem 3rem rgba(0,0,0,0.2);'>
         <h1 style='color: white; font-size: 3.5rem; text-align: center; font-family: "Lucida Console", Monaco, monospace; letter-spacing: 0.05em; margin-bottom: 1.5rem; text-shadow: 2px 2px 4px rgba(255,255,255,0.5);'>
             AI Tarot Card Reading
         </h1>
